@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KFarmTech Store</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .product-img {
+        max-height: 250px;
+        object-fit: cover;
+      }
+      .cart-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .cart-summary {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">KFarmTech Store</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#products">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#cart">Cart</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Products Section -->
+    <div class="container my-5" id="products">
+      <h2 class="text-center mb-5">Available Products</h2>
+      <div class="row">
+        <!-- Product 1 -->
+        <div class="col-md-4">
+          <div class="card">
+            <img
+              src="products/Nyota-Bean-seeds-for-sale-in-Kenya.jpg"
+              class="card-img-top product-img"
+              alt="Product 1"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Nyota Beans 2kg</h5>
+              <p class="card-text">
+                Looking for a drought-resistant, high-yielding bean perfect for
+                Kenyan conditions? Look no further than the Nyota bean!
+                Developed by the Kenya Agricultural and Livestock Research
+                Organization (KALRO), Nyota beans are quickly becoming a
+                favorite among farmers for several reasons:
+              </p>
+              <p><strong>Ksh. 1800</strong></p>
+              <button
+                class="btn btn-primary add-to-cart"
+                data-name="Nyota Beans 2kg"
+                data-price="1800"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Product 2 -->
+        <div class="col-md-4">
+          <div class="card">
+            <img
+              src="products/onion-russet-f1-online-agrovet-in-kenya.jpg"
+              class="card-img-top product-img"
+              alt="Product 2"
+            />
+            <div class="card-body">
+              <h5 class="card-title">RUSSET F1 ONION</h5>
+              <p class="card-text">
+                RUSSET F1 ONION Russet F1 onion variety is a strong plant and
+                matures early. Russet F1 onion bulbs are very firm, have red
+                flesh color, and can be stored for 3-3.5 months. The variety has
+                shown strong resistance to Pink root.
+              </p>
+              <p><strong>Ksh. 1550</strong></p>
+              <button
+                class="btn btn-primary add-to-cart"
+                data-name="RUSSET F1 ONION"
+                data-price="1500"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Product 3 -->
+        <div class="col-md-4">
+          <div class="card">
+            <img
+              src="products/SC-Sungura-301-Maize-Seed-1-300x300.jpg"
+              class="card-img-top product-img"
+              alt="Product 3"
+            />
+            <div class="card-body">
+              <h5 class="card-title">SC Sungura 301 Maize Seed</h5>
+              <p class="card-text">
+                Sc Sungura 301 is an Ultra early maturing variety that takes
+                72-80 days to physical maturity. It is an excellent alternative
+                to Sorghum and Millet cropping. This variety is tolerant to
+                weather challenges, with wide regional adaptation under marginal
+                conditions.
+              </p>
+              <p><strong>Ksh. 550</strong></p>
+              <button
+                class="btn btn-primary add-to-cart"
+                data-name="SC Sungura 301 Maize Seed"
+                data-price="550"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Section -->
+    <div class="container my-5" id="cart">
+      <h2 class="text-center mb-5">Your Cart</h2>
+      <div class="card">
+        <div class="card-body">
+          <ul id="cart-items" class="list-group mb-3">
+            <!-- Cart items will be dynamically added here -->
+          </ul>
+          <p class="cart-summary">
+            Total: Ksh.<span id="cart-total">0.00</span>
+          </p>
+          <button class="btn btn-success" id="checkout-btn">Checkout</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-3 text-center">
+      <div class="container">
+        <p>&copy; 2024 KFarmTech. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript for Cart Functionality -->
+    <script>
+      // Cart Functionality
+      let cart = [];
+      let cartTotal = 0;
+
+      // Add to Cart Functionality
+      document.querySelectorAll(".add-to-cart").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          const productName = event.target.getAttribute("data-name");
+          const productPrice = parseFloat(
+            event.target.getAttribute("data-price")
+          );
+
+          // Add product to cart
+          cart.push({ name: productName, price: productPrice });
+          cartTotal += productPrice;
+
+          // Update the cart UI
+          updateCart();
+        });
+      });
+
+      // Function to update cart display
+      function updateCart() {
+        const cartItemsList = document.getElementById("cart-items");
+        cartItemsList.innerHTML = ""; // Clear existing items
+
+        cart.forEach((item) => {
+          const li = document.createElement("li");
+          li.classList.add("list-group-item", "cart-item");
+          li.innerHTML = `${item.name} - Ksh.{data-price}`;
+          cartItemsList.appendChild(li);
+        });
+
+        // Update total
+        document.getElementById("cart-total").textContent =
+          cartTotal.toFixed(2);
+      }
+
+      // Checkout Functionality
+      document.getElementById("checkout-btn").addEventListener("click", () => {
+        alert("Proceeding to payment gateway (This is a mockup).");
+        // Here, you can integrate with a real payment gateway like PayPal, Stripe, etc.
+      });
+    </script>
+  </body>
+</html>
